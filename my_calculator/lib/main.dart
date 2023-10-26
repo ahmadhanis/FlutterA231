@@ -23,7 +23,7 @@ class _MainAppState extends State<MainApp> {
         appBar: AppBar(title: const Text("MY Calculator")),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
             child: Column(children: [
               TextField(
                 controller: numa,
@@ -33,14 +33,19 @@ class _MainAppState extends State<MainApp> {
                         borderRadius: BorderRadius.circular(10.0))),
                 keyboardType: const TextInputType.numberWithOptions(),
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 16,
+              ),
               TextField(
                 controller: numb,
-                 decoration: InputDecoration(
+                decoration: InputDecoration(
                     hintText: "Enter your second number",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0))),
                 keyboardType: const TextInputType.numberWithOptions(),
+              ),
+               const SizedBox(
+                height: 16,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,7 +65,7 @@ class _MainAppState extends State<MainApp> {
                 ],
               ),
               Text(
-                "Output: $result",
+                "Output: ${result.toStringAsFixed(3)}",
                 style: const TextStyle(fontSize: 24),
               )
             ]),

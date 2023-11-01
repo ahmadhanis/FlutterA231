@@ -44,7 +44,7 @@ class _MainAppState extends State<MainApp> {
                         borderRadius: BorderRadius.circular(10.0))),
                 keyboardType: const TextInputType.numberWithOptions(),
               ),
-               const SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Row(

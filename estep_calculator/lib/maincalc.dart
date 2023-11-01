@@ -56,6 +56,17 @@ class _MainCalcState extends State<MainCalc> {
                   onPressed: calESTEP,
                   child: const Text("Calculate New ESTEP")),
               Text("NEW ESTEP VALUE: ${result.toStringAsFixed(2)}"),
+              // Builder(
+              //   builder: (context) => ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.pushReplacement(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => const MainCalc()));
+              //     },
+              //     child: const Text('Press ME'),
+              //   ),
+              // )
             ],
           ),
         )),

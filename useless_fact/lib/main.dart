@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,7 +49,7 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
-  Future<void> getData() async {
+  Future<void> getData()  async {
     status = true;
     setState(() {});
     var url = Uri.parse('https://uselessfacts.jsph.pl/api/v2/facts/random');
@@ -58,7 +57,7 @@ class _MainAppState extends State<MainApp> {
     if (response.statusCode == 200) {
       var parsedJson = json.decode(response.body);
       uselessfact = parsedJson['text'];
-      source = parsedJson['source'];
+      source = parsedJson['source_url'];
       status = false;
       setState(() {});
 

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Dictionary',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -48,8 +48,28 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: textEditingController,
             ),
             ElevatedButton(onPressed: onPressed, child: const Text("Search")),
-            Text("Result:\n $definition"),
-            Text("Example:\n $example")
+            Container(
+              width: 400,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Meaning:",
+                        style:
+                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(definition, style: const TextStyle(fontSize: 16)),
+                      const Text("Example",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text(example, style: const TextStyle(fontSize: 16))
+                    ],
+                  ),
+                ),
+              ),
+            )
           ]),
         ),
       ),
@@ -82,6 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
           textColor: Colors.white,
           fontSize: 16.0);
     } else {
+      definition = "";
+      example = "";
+      setState(() {});
       Fluttertoast.showToast(
           msg: "Not Found",
           toastLength: Toast.LENGTH_SHORT,

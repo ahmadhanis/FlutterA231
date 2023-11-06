@@ -35,9 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController textEditingController = TextEditingController();
   String definition = "";
   String example = "";
+  late double screenHeight, screenWidth;
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -48,8 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: textEditingController,
             ),
             ElevatedButton(onPressed: onPressed, child: const Text("Search")),
-            Container(
-              width: 400,
+            SizedBox(
+              width: screenWidth,
+              height: screenHeight / 2,
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -57,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       const Text(
                         "Meaning:",
-                        style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Text(definition, style: const TextStyle(fontSize: 16)),
                       const Text("Example",

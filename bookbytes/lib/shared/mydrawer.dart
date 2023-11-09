@@ -56,7 +56,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.verified_user),
-            title: const Text('Profile'),
+            title: const Text('My Profile'),
             onTap: () {
               Navigator.pop(context);
               // Navigator.push(context,

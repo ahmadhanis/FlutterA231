@@ -1,5 +1,7 @@
+import 'package:bookbytes/shared/myserverconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -16,7 +18,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   String eula = "";
   bool _isChecked = false;
-  get onChanged => null;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           validator: (val) => val!.isEmpty ||
                                   !val.contains("@") ||
-                                  val.contains(".")
+                                  !val.contains(".")
                               ? "enter a valid email"
                               : null,
                         ),
@@ -127,7 +128,57 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  void _registerUserDialog() {}
+  void _registerUserDialog() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    if (!_isChecked) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please accept EULA"),
+        backgroundColor: Colors.red,
+      ));
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: const Text(
+            "Register new account?",
+            style: TextStyle(),
+          ),
+          content: const Text("Are you sure?", style: TextStyle()),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _registerUser();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Registration Canceled"),
+                  backgroundColor: Colors.red,
+                ));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   loadEula() async {
     eula = await rootBundle.loadString('assets/eula.txt');
@@ -144,7 +195,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             style: TextStyle(),
           ),
           content: SizedBox(
-            height: 400,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -155,9 +207,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     textAlign: TextAlign.justify,
                     text: TextSpan(
                         style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.black
-                        ),
+                            fontSize: 12.0, color: Colors.black),
                         text: eula),
                   )),
                 ),
@@ -177,5 +227,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
       },
     );
+  }
+
+  void _registerUser() {
+    String _name = _nameEditingController.text;
+    String _email = _emailditingController.text;
+    String _pass = _passEditingController.text;
+
+    http.post(Uri.parse("${MyServerConfig.server}/bookbyte/php/register_user.php"),
+        body: {
+          "name": _name,
+          "email": _email,
+          "password": _pass
+        }).then((response) {
+      print(response.body);
+    });
   }
 }

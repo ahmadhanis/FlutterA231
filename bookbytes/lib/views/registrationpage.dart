@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:bookbytes/shared/myserverconfig.dart';
+import 'package:bookbytes/views/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -129,6 +132,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _registerUserDialog() {
+    String _pass = _passEditingController.text;
+    String _pass2 = _pass2EditingController.text;
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -139,6 +144,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ));
       return;
     }
+    if (_pass != _pass2) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Password do not match!!!"),
+        backgroundColor: Colors.red,
+      ));
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -234,13 +247,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
     String _email = _emailditingController.text;
     String _pass = _passEditingController.text;
 
-    http.post(Uri.parse("${MyServerConfig.server}/bookbyte/php/register_user.php"),
+    http.post(
+        Uri.parse("${MyServerConfig.server}/bookbytes/php/register_user.php"),
         body: {
           "name": _name,
           "email": _email,
           "password": _pass
         }).then((response) {
-      print(response.body);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        if (data['status'] == "success") {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Registration Success"),
+            backgroundColor: Colors.green,
+          ));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (content) => const LoginPage()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Registration Failed"),
+            backgroundColor: Colors.red,
+          ));
+        }
+      }
     });
   }
 }

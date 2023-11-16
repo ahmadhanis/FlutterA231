@@ -14,7 +14,15 @@ $password = sha1($_POST['password']);
 $sqllogin = "SELECT * FROM `tbl_users` WHERE `user_email` = '$email' AND `user_password` = '$password'";
 $result = $conn->query($sqllogin);
 if ($result->num_rows > 0) {
-    $response = array('status' => 'success', 'data' => null);
+    $userlist = array();
+    while ($row = $result->fetch_assoc()) {
+        $userlist['userid'] = $row['user_id'];
+        $userlist['useremail'] = $row['user_email'];
+        $userlist['username'] = $row['user_name'];
+        $userlist['userpassword'] = $_POST['password'];
+        $userlist['userdatereg'] = $row['user_datereg'];
+    }
+    $response = array('status' => 'success', 'data' => $userlist);
     sendJsonResponse($response);
 }else{
 	$response = array('status' => 'failed', 'data' => null);

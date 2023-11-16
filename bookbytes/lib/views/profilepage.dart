@@ -1,6 +1,7 @@
 //Profile page
 
 import 'package:bookbytes/shared/mydrawer.dart';
+import 'package:bookbytes/views/loginpage.dart';
 import 'package:bookbytes/views/registrationpage.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +52,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       MaterialPageRoute(
                           builder: (content) => const RegistrationPage()));
                 },
-                child: Text("Register"))
+                child: Text("Register")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (content) => const LoginPage()));
+                },
+                child: Text("Login"))
           ]),
         ));
   }

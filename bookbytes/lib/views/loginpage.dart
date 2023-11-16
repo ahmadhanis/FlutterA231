@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:bookbytes/shared/myserverconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +21,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isChecked = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadpref();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +89,10 @@ class _LoginPageState extends State<LoginPage> {
                                 Checkbox(
                                   value: _isChecked,
                                   onChanged: (bool? value) {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    saveremovepref(value!);
                                     setState(() {
                                       _isChecked = value!;
                                     });
@@ -112,10 +128,20 @@ class _LoginPageState extends State<LoginPage> {
     http.post(
         Uri.parse("${MyServerConfig.server}/bookbytes/php/login_user.php"),
         body: {"email": _email, "password": _pass}).then((response) {
-      print(response.body);
+      // print(response.body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['status'] == "success") {
+          User user = User.fromJson(data['data']);
+          // User user = User(
+          //     userid: data['data']['userid'],
+          //     useremail: data['data']['useremail'],
+          //     username: data['data']['username'],
+          //     userdatereg: data['data']['userdatereg'],
+          //     userpassword: data['data']['userpassword']);
+          print(user.username);
+          print(user.useremail);
+          print(user.userid);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Login Success"),
             backgroundColor: Colors.green,
@@ -128,5 +154,44 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     });
+  }
+
+  void saveremovepref(bool value) async {
+    String email = _emailditingController.text;
+    String password = _passEditingController.text;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (value) {
+      //safe pref
+      await prefs.setString('email', email);
+      await prefs.setString('pass', password);
+      await prefs.setBool('rem', value);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Preferences Stored"),
+        backgroundColor: Colors.green,
+      ));
+    } else {
+      //remove pref
+      await prefs.setString('email', '');
+      await prefs.setString('pass', '');
+      await prefs.setBool('rem', false);
+      _emailditingController.text = '';
+      _passEditingController.text = '';
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Preferences Removed"),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
+  Future<void> loadpref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = (prefs.getString('email')) ?? '';
+    String password = (prefs.getString('pass')) ?? '';
+    _isChecked = (prefs.getBool('rem')) ?? false;
+    if (_isChecked) {
+      _emailditingController.text = email;
+      _passEditingController.text = password;
+    }
+    setState(() {});
   }
 }

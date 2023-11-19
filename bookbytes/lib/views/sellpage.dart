@@ -3,7 +3,6 @@
 import 'package:bookbytes/shared/mydrawer.dart';
 import 'package:flutter/material.dart';
 
-
 class SellPage extends StatefulWidget {
   const SellPage({super.key});
 
@@ -41,7 +40,9 @@ class _SellPageState extends State<SellPage> {
                 height: 1.0,
               ),
             )),
-        drawer: const MyDrawer(),
+        drawer: MyDrawer(
+          page: 'seller',
+        ),
         body: const Center(
           child: Text("SELLER PAGE"),
         ));

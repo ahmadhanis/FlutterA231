@@ -42,7 +42,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 1.0,
               ),
             )),
-        drawer: const MyDrawer(),
+        drawer: MyDrawer(
+          page: 'profile',
+        ),
         body: Center(
           child: Column(children: [
             ElevatedButton(

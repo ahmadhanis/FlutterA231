@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
                 height: 1.0,
               ),
             )),
-        drawer: const MyDrawer(),
+        drawer: MyDrawer(page: "buyer"),
         body: const Center(
           child: Text("SELLER PAGE"),
         ));

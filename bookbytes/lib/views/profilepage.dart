@@ -5,16 +5,23 @@ import 'package:bookbytes/views/loginpage.dart';
 import 'package:bookbytes/views/registrationpage.dart';
 import 'package:flutter/material.dart';
 
+import '../models/user.dart';
+
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final User userdata;
+  const ProfilePage({super.key, required this.userdata});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late double screenWidth, screenHeight;
+
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.black),
@@ -23,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 //CircleAvatar(backgroundImage: AssetImage('')),
                 Text(
-                  "My Profile",
+                  "My Account",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -44,25 +51,116 @@ class _ProfilePageState extends State<ProfilePage> {
             )),
         drawer: MyDrawer(
           page: 'profile',
+          userdata: widget.userdata,
         ),
         body: Center(
           child: Column(children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (content) => const RegistrationPage()));
-                },
-                child: Text("Register")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (content) => const LoginPage()));
-                },
-                child: Text("Login"))
+            Container(
+              height: screenHeight * 0.25,
+              padding: const EdgeInsets.all(4),
+              child: Card(
+                  child: Row(children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  width: screenWidth * 0.4,
+                  height: screenHeight * 0.4,
+                  child: Image.asset(
+                    'assets/images/profile.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const Expanded(
+                    flex: 7,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Ahmad Hanis",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Divider(
+                          color: Colors.blueGrey,
+                        )
+                      ],
+                    ))
+              ])),
+            ),
+            Container(
+              height: screenHeight * 0.035,
+              alignment: Alignment.center,
+              color: Colors.blue,
+              width: screenWidth,
+              child: const Text("UPDATE ACCOUNT",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
+            ),
+            // const Divider(
+            //   color: Colors.blueGrey,
+            // ),
+            Expanded(
+                child: ListView(
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    shrinkWrap: true,
+                    children: [
+                  MaterialButton(
+                    onPressed: () {},
+                    child: const Text("UPDATE NAME"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {},
+                    child: const Text("UPDATE PASSWORD"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {},
+                    child: const Text("UPDATE PHONE NUMBER"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {},
+                    child: const Text("UPDATE ADDRESS"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (content) => const RegistrationPage()));
+                    },
+                    child: const Text("NEW REGISTRATION"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (content) => const LoginPage()));
+                    },
+                    child: const Text("LOGIN"),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      {}
+                    },
+                    child: const Text("LOGOUT"),
+                  ),
+                ])),
           ]),
         ));
   }

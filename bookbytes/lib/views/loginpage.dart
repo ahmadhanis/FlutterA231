@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:bookbytes/shared/myserverconfig.dart';
+import 'package:bookbytes/views/mainpage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -128,24 +129,18 @@ class _LoginPageState extends State<LoginPage> {
     http.post(
         Uri.parse("${MyServerConfig.server}/bookbytes/php/login_user.php"),
         body: {"email": _email, "password": _pass}).then((response) {
+      // print(response.statusCode);
       // print(response.body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['status'] == "success") {
           User user = User.fromJson(data['data']);
-          // User user = User(
-          //     userid: data['data']['userid'],
-          //     useremail: data['data']['useremail'],
-          //     username: data['data']['username'],
-          //     userdatereg: data['data']['userdatereg'],
-          //     userpassword: data['data']['userpassword']);
-          print(user.username);
-          print(user.useremail);
-          print(user.userid);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Login Success"),
             backgroundColor: Colors.green,
           ));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (content) =>  MainPage(userdata:user)));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Login Failed"),
@@ -155,6 +150,16 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
+
+  // User user = User(
+  //     userid: data['data']['userid'],
+  //     useremail: data['data']['useremail'],
+  //     username: data['data']['username'],
+  //     userdatereg: data['data']['userdatereg'],
+  //     userpassword: data['data']['userpassword']);
+  // print(user.username);
+  // print(user.useremail);
+  // print(user.userid);
 
   void saveremovepref(bool value) async {
     String email = _emailditingController.text;

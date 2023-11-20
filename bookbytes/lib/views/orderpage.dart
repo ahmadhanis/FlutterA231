@@ -1,18 +1,19 @@
-//Buyer page
+//seller page
 
-import 'package:bookbytes/models/user.dart';
 import 'package:bookbytes/shared/mydrawer.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatefulWidget {
+import '../models/user.dart';
+
+class OrderPage extends StatefulWidget {
   final User userdata;
-  const MainPage({super.key, required this.userdata});
+  const OrderPage({super.key, required this.userdata});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<OrderPage> createState() => _OrderPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
               children: [
                 //CircleAvatar(backgroundImage: AssetImage('')),
                 Text(
-                  "Book List",
+                  "Sells Book",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -43,12 +44,11 @@ class _MainPageState extends State<MainPage> {
               ),
             )),
         drawer: MyDrawer(
-          page: "books",
+          page: 'seller',
           userdata: widget.userdata,
         ),
-        body: Center(
-          child: Column(children: [Text(widget.userdata.username.toString()),
-          Text(widget.userdata.useremail.toString())]),
+        body: const Center(
+          child: Text("SELLER PAGE"),
         ));
   }
 }

@@ -1,16 +1,18 @@
-//seller page
-
-import 'package:bookbytes/shared/mydrawer.dart';
 import 'package:flutter/material.dart';
 
-class SellPage extends StatefulWidget {
-  const SellPage({super.key});
+import '../models/user.dart';
+import '../shared/mydrawer.dart';
+
+class CommunityPage extends StatefulWidget {
+  final User userdata;
+
+  const CommunityPage({super.key, required this.userdata});
 
   @override
-  State<SellPage> createState() => _SellPageState();
+  State<CommunityPage> createState() => _CommunityPageState();
 }
 
-class _SellPageState extends State<SellPage> {
+class _CommunityPageState extends State<CommunityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class _SellPageState extends State<SellPage> {
               children: [
                 //CircleAvatar(backgroundImage: AssetImage('')),
                 Text(
-                  "Sells Book",
+                  "Buy Book",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -41,7 +43,8 @@ class _SellPageState extends State<SellPage> {
               ),
             )),
         drawer: MyDrawer(
-          page: 'seller',
+          page: "buyer",
+          userdata: widget.userdata,
         ),
         body: const Center(
           child: Text("SELLER PAGE"),

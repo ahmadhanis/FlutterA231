@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../models/user.dart';
 import '../views/mainpage.dart';
 import '../views/profilepage.dart';
-import '../views/sellpage.dart';
+import '../views/orderpage.dart';
 import 'EnterExitRoute.dart';
 
 class MyDrawer extends StatefulWidget {
   final String page;
-  const MyDrawer({Key? key, required this.page}) : super(key: key);
+  final User userdata;
+  const MyDrawer({Key? key, required this.page, required this.userdata})
+      : super(key: key);
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -29,7 +32,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.money),
-            title: const Text('Buy'),
+            title: const Text('Books'),
             onTap: () {
               Navigator.pop(context);
               // Navigator.push(
@@ -37,7 +40,7 @@ class _MyDrawerState extends State<MyDrawer> {
               //     MaterialPageRoute(
               //         builder: (content) => const MainPage()));
               print(widget.page.toString());
-              if (widget.page.toString() == "buyer") {
+              if (widget.page.toString() == "books") {
                 //  Navigator.pop(context);
                 return;
               }
@@ -45,12 +48,15 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage: const MainPage(), enterPage: const MainPage()));
+                      exitPage: MainPage(
+                        userdata: widget.userdata,
+                      ),
+                      enterPage: MainPage(userdata: widget.userdata)));
             },
           ),
           ListTile(
             leading: const Icon(Icons.sell),
-            title: const Text('Sell'),
+            title: const Text('Orders and Sales'),
             onTap: () {
               Navigator.pop(context);
               print(widget.page.toString());
@@ -65,16 +71,17 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage: const SellPage(), enterPage: const SellPage()));
+                      exitPage:  OrderPage(userdata: widget.userdata,),
+                      enterPage:  OrderPage(userdata: widget.userdata,)));
             },
           ),
           ListTile(
-            leading: const Icon(Icons.verified_user),
-            title: const Text('My Profile'),
+            leading: const Icon(Icons.people),
+            title: const Text('Community'),
             onTap: () {
               print(widget.page.toString());
               Navigator.pop(context);
-              if (widget.page.toString() == "profile") {
+              if (widget.page.toString() == "Community") {
                 //  Navigator.pop(context);
                 return;
               }
@@ -85,8 +92,29 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage: const ProfilePage(),
-                      enterPage: const ProfilePage()));
+                      exitPage:  ProfilePage(userdata: widget.userdata),
+                      enterPage: ProfilePage(userdata: widget.userdata)));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.verified_user),
+            title: const Text('My Account'),
+            onTap: () {
+              print(widget.page.toString());
+              Navigator.pop(context);
+              if (widget.page.toString() == "account") {
+                //  Navigator.pop(context);
+                return;
+              }
+              Navigator.pop(context);
+
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (content) => const ProfilePage()));
+              Navigator.push(
+                  context,
+                  EnterExitRoute(
+                      exitPage:  ProfilePage(userdata: widget.userdata),
+                      enterPage:  ProfilePage(userdata: widget.userdata)));
             },
           ),
           const Divider(

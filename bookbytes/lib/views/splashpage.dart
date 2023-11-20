@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../models/user.dart';
 import 'mainpage.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,10 +16,20 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    User user = User(
+        userid: "0",
+        useremail: "unregistered@email.com",
+        username: "unregistered",
+        userdatereg: "",
+        userpassword: "");
     Timer(
         const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (content) => const MainPage())));
+        () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (content) => MainPage(
+                      userdata: user,
+                    ))));
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:bookbytes/views/communitypage.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -24,11 +25,23 @@ class _MyDrawerState extends State<MyDrawer> {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text('Profile'),
+            currentAccountPicture: const CircleAvatar(
+                foregroundImage: AssetImage('assets/images/profile.png'),
+                backgroundColor: Colors.white),
+            accountName: Text(widget.userdata.username.toString()),
+            accountEmail: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.userdata.useremail.toString()),
+                    Text("RM100")
+                  ]),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.money),
@@ -71,8 +84,12 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage:  OrderPage(userdata: widget.userdata,),
-                      enterPage:  OrderPage(userdata: widget.userdata,)));
+                      exitPage: OrderPage(
+                        userdata: widget.userdata,
+                      ),
+                      enterPage: OrderPage(
+                        userdata: widget.userdata,
+                      )));
             },
           ),
           ListTile(
@@ -81,7 +98,7 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               print(widget.page.toString());
               Navigator.pop(context);
-              if (widget.page.toString() == "Community") {
+              if (widget.page.toString() == "community") {
                 //  Navigator.pop(context);
                 return;
               }
@@ -92,8 +109,8 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage:  ProfilePage(userdata: widget.userdata),
-                      enterPage: ProfilePage(userdata: widget.userdata)));
+                      exitPage: CommunityPage(userdata: widget.userdata),
+                      enterPage: CommunityPage(userdata: widget.userdata)));
             },
           ),
           ListTile(
@@ -113,8 +130,8 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(
                   context,
                   EnterExitRoute(
-                      exitPage:  ProfilePage(userdata: widget.userdata),
-                      enterPage:  ProfilePage(userdata: widget.userdata)));
+                      exitPage: ProfilePage(userdata: widget.userdata),
+                      enterPage: ProfilePage(userdata: widget.userdata)));
             },
           ),
           const Divider(

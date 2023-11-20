@@ -23,7 +23,7 @@ class _CommunityPageState extends State<CommunityPage> {
               children: [
                 //CircleAvatar(backgroundImage: AssetImage('')),
                 Text(
-                  "Buy Book",
+                  "Comunity Page",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -43,11 +43,11 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             )),
         drawer: MyDrawer(
-          page: "buyer",
+          page: "community",
           userdata: widget.userdata,
         ),
         body: const Center(
-          child: Text("SELLER PAGE"),
+          child: Text("COMMUNITY PAGE"),
         ));
   }
 }

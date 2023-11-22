@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             )),
         drawer: MyDrawer(
-          page: 'profile',
+          page: 'account',
           userdata: widget.userdata,
         ),
         body: Center(
@@ -69,15 +69,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                const Expanded(
+                Expanded(
                     flex: 7,
                     child: Column(
                       children: [
                         Text(
-                          "Ahmad Hanis",
-                          style: TextStyle(fontSize: 24),
+                          widget.userdata.username.toString(),
+                          style: const TextStyle(fontSize: 24),
                         ),
-                        Divider(
+                        const Divider(
                           color: Colors.blueGrey,
                         )
                       ],

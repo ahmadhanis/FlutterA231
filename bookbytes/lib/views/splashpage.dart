@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage> {
             User user = User(
                 userid: "0",
                 useremail: "unregistered@email.com",
-                username: "unregistered",
+                username: "Unregistered",
                 userdatereg: "",
                 userpassword: "");
             Timer(
@@ -96,7 +96,7 @@ class _SplashPageState extends State<SplashPage> {
       User user = User(
           userid: "0",
           useremail: "unregistered@email.com",
-          username: "unregistered",
+          username: "Unregistered",
           userdatereg: "",
           userpassword: "");
       Timer(

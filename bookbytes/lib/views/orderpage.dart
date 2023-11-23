@@ -47,8 +47,10 @@ class _OrderPageState extends State<OrderPage> {
           page: 'seller',
           userdata: widget.userdata,
         ),
-        body: const Center(
-          child: Text("SELLER PAGE"),
+        body:  Center(
+          child: Column(children: [
+            Text(widget.userdata.useremail.toString())
+          ]),
         ));
   }
 }

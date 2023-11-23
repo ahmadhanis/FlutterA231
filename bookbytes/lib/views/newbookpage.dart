@@ -22,12 +22,18 @@ class _NewBookPageState extends State<NewBookPage> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+    String dropdownvalue = 'New';
+    var types = [
+      'New',
+      'Used',
+      'Digital',
+    ];
     return Scaffold(
-      appBar: AppBar(title: Text("New Book")),
+      appBar: AppBar(title: const Text("New Book")),
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
             child: GestureDetector(
               onTap: () {
                 showSelectionDialog();
@@ -35,7 +41,7 @@ class _NewBookPageState extends State<NewBookPage> {
               child: Card(
                 elevation: 8,
                 child: Container(
-                  height: screenHeight * 0.35,
+                  height: screenHeight * 0.3,
                   width: screenWidth,
                   decoration: BoxDecoration(
                       image: DecorationImage(
@@ -48,9 +54,205 @@ class _NewBookPageState extends State<NewBookPage> {
             ),
           ),
           Container(
-            height: screenHeight * 0.65,
-            color: Colors.blue,
-          )
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+              height: screenHeight * 0.70,
+              child: Form(
+                child: Column(
+                  children: [
+                    const Text(
+                      "Add New Book",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (val) => val!.isEmpty || (val.length < 3)
+                            ? "Book title must be longer than 3"
+                            : null,
+                        onFieldSubmitted: (v) {},
+                        controller: null,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: 'ISBN',
+                            labelStyle: const TextStyle(),
+                            icon: const Icon(
+                              Icons.numbers,
+                            ),
+                            suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.camera)),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(width: 2.0),
+                            ))),
+                    TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (val) => val!.isEmpty || (val.length < 3)
+                            ? "Book title must be longer than 3"
+                            : null,
+                        onFieldSubmitted: (v) {},
+                        controller: null,
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(
+                            labelText: 'Book Title',
+                            labelStyle: TextStyle(),
+                            icon: Icon(
+                              Icons.book,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 2.0),
+                            ))),
+                    TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (val) => val!.isEmpty || (val.length < 10)
+                            ? "Book description must be longer than 10"
+                            : null,
+                        onFieldSubmitted: (v) {},
+                        maxLines: 4,
+                        controller: null,
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(
+                            labelText: 'Book Description',
+                            alignLabelWithHint: true,
+                            labelStyle: TextStyle(),
+                            icon: Icon(
+                              Icons.description,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 2.0),
+                            ))),
+                    TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (val) => val!.isEmpty || (val.length < 3)
+                            ? "Book author must be longer than 3"
+                            : null,
+                        onFieldSubmitted: (v) {},
+                        controller: null,
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(
+                            labelText: 'Book Author',
+                            labelStyle: TextStyle(),
+                            icon: Icon(
+                              Icons.person_2,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 2.0),
+                            ))),
+                    Row(
+                      children: [
+                        Flexible(
+                            flex: 3,
+                            child: Container(
+                              child: TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  validator: (val) =>
+                                      val!.isEmpty || (val.length < 3)
+                                          ? "Product price must contain value"
+                                          : null,
+                                  onFieldSubmitted: (v) {},
+                                  controller: null,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Book Price',
+                                      labelStyle: TextStyle(),
+                                      icon: Icon(Icons.money),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(width: 2.0),
+                                      ))),
+                            )),
+                        Flexible(
+                            flex: 3,
+                            child: Container(
+                              child: TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  validator: (val) =>
+                                      val!.isEmpty || (val.length < 3)
+                                          ? "Product price must contain value"
+                                          : null,
+                                  onFieldSubmitted: (v) {},
+                                  controller: null,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Quantity',
+                                      labelStyle: TextStyle(),
+                                      icon: Icon(Icons.add_box),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(width: 2.0),
+                                      ))),
+                            )),
+                        Flexible(
+                          flex: 3,
+                          child: Container(
+                              margin: EdgeInsets.all(8),
+                              height: 50,
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5.0))),
+                              child: DropdownButton(
+                                value: dropdownvalue,
+                                underline: const SizedBox(),
+                                isExpanded: true,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: types.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  print(newValue);
+                                  newValue = dropdownvalue;
+
+                                  setState(() {
+                                    dropdownvalue = newValue!;
+                                  });
+                                },
+                              )),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(screenWidth * 0.80, 40)),
+                      child: const Text('Add Product'),
+                      onPressed: () => {},
+                    ),
+                    // Container(
+                    //     margin: EdgeInsets.all(8),
+                    //     height: 60,
+                    //     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    //     decoration: BoxDecoration(
+                    //         border: Border.all(color: Colors.grey),
+                    //         borderRadius:
+                    //             const BorderRadius.all(Radius.circular(5.0))),
+                    //     child: DropdownButton(
+                    //       value: dropdownvalue,
+                    //       underline: const SizedBox(),
+                    //       isExpanded: true,
+                    //       icon: const Icon(Icons.keyboard_arrow_down),
+                    //       items: types.map((String items) {
+                    //         return DropdownMenuItem(
+                    //           value: items,
+                    //           child: Text(items),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (String? newValue) {
+                    //         print(newValue);
+                    //         newValue = dropdownvalue;
+
+                    //         setState(() {
+                    //           dropdownvalue = newValue!;
+                    //         });
+                    //       },
+                    //     )),
+                  ],
+                ),
+              )),
         ]),
       ),
     );
@@ -103,7 +305,6 @@ class _NewBookPageState extends State<NewBookPage> {
 
     if (pickedFile != null) {
       _image = File(pickedFile.path);
-
       cropImage();
     } else {
       print('No image selected.');
@@ -120,6 +321,7 @@ class _NewBookPageState extends State<NewBookPage> {
 
     if (pickedFile != null) {
       _image = File(pickedFile.path);
+
       cropImage();
     } else {
       print('No image selected.');
@@ -131,7 +333,7 @@ class _NewBookPageState extends State<NewBookPage> {
       sourcePath: _image!.path,
       aspectRatioPresets: [
         //CropAspectRatioPreset.square,
-         CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.ratio3x2,
         // CropAspectRatioPreset.original,
         // CropAspectRatioPreset.ratio4x3,
         // CropAspectRatioPreset.ratio16x9

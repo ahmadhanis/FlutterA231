@@ -368,7 +368,7 @@ class _NewBookPageState extends State<NewBookPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
           title: const Text(
             "Insert new book",
             style: TextStyle(),

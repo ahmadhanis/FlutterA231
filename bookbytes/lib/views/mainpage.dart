@@ -1,10 +1,12 @@
 //Buyer page
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bookbytes/models/book.dart';
 import 'package:bookbytes/models/user.dart';
 import 'package:bookbytes/shared/mydrawer.dart';
 import 'package:bookbytes/shared/myserverconfig.dart';
+import 'package:bookbytes/views/bookdetails.dart';
 import 'package:bookbytes/views/newbookpage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -20,10 +22,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<Book> bookList = <Book>[];
   late double screenWidth, screenHeight;
+
   @override
   void initState() {
     super.initState();
-    loadBooks();
+    loadBooks("All");
   }
 
   int axiscount = 2;
@@ -55,6 +58,13 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showSearchDialog();
+                },
+                icon: const Icon(Icons.search))
+          ],
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           bottom: PreferredSize(
@@ -77,39 +87,53 @@ class _MainPageState extends State<MainPage> {
                     crossAxisCount: axiscount,
                     children: List.generate(bookList.length, (index) {
                       return Card(
+                        child: InkWell(
+                          onTap: () async {
+                            Book book = Book.fromJson(bookList[index].toJson());
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) => BookDetails(
+                                          user: widget.userdata,
+                                          book: book,
+                                        )));
+                            loadBooks("All");
+                          },
                           child: Column(
-                        children: [
-                          Flexible(
-                            flex: 6,
-                            child: Container(
-                              width: screenWidth,
-                              padding: const EdgeInsets.all(4.0),
-                              child: Image.network(
-                                  fit: BoxFit.fill,
-                                  "${MyServerConfig.server}/bookbytes/assets/books/${bookList[index].bookId}.png"),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 4,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  truncateString(
-                                      bookList[index].bookTitle.toString()),
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                            children: [
+                              Flexible(
+                                flex: 6,
+                                child: Container(
+                                  width: screenWidth,
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Image.network(
+                                      fit: BoxFit.fill,
+                                      "${MyServerConfig.server}/bookbytes/assets/books/${bookList[index].bookId}.png"),
                                 ),
-                                Text("RM ${bookList[index].bookPrice}"),
-                                Text(
-                                    "Available ${bookList[index].bookQty} unit"),
-                              ],
-                            ),
-                          )
-                        ],
-                      ));
+                              ),
+                              Flexible(
+                                flex: 4,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      truncateString(
+                                          bookList[index].bookTitle.toString()),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    Text("RM ${bookList[index].bookPrice}"),
+                                    Text(
+                                        "Available ${bookList[index].bookQty} unit"),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
                     }),
                   ),
                 )
@@ -147,24 +171,59 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  void loadBooks() {
-    http.get(Uri.parse("${MyServerConfig.server}/bookbytes/php/load_books.php"),
-        headers: {
-          //get array
-        }).then((response) {
+  void loadBooks(String title) {
+    http
+        .get(
+      Uri.parse(
+          "${MyServerConfig.server}/bookbytes/php/load_books.php?title=$title"),
+    )
+        .then((response) {
       //log(response.body);
       if (response.statusCode == 200) {
+        log(response.body);
         var data = jsonDecode(response.body);
         if (data['status'] == "success") {
           bookList.clear();
           data['data']['books'].forEach((v) {
             bookList.add(Book.fromJson(v));
           });
+          print("Data Reloaded!!!");
         } else {
           //if no status failed
         }
       }
       setState(() {});
     });
+  }
+
+  void showSearchDialog() {
+    TextEditingController searchctlr = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+            title: const Text(
+              "Search Title",
+              style: TextStyle(),
+            ),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: searchctlr,
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    loadBooks(searchctlr.text);
+                  },
+                  child: Text("Search"),
+                )
+              ],
+            ));
+      },
+    );
   }
 }

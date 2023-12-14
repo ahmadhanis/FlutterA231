@@ -40,7 +40,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.userdata.useremail.toString()),
-                    Text("RM100")
+                    const Text("RM100")
                   ]),
             ),
           ),
@@ -53,7 +53,6 @@ class _MyDrawerState extends State<MyDrawer> {
               //     context,
               //     MaterialPageRoute(
               //         builder: (content) => const MainPage()));
-              print(widget.page.toString());
               if (widget.page.toString() == "books") {
                 //  Navigator.pop(context);
                 return;
@@ -73,7 +72,6 @@ class _MyDrawerState extends State<MyDrawer> {
             title: const Text('Orders and Sales'),
             onTap: () {
               Navigator.pop(context);
-              print(widget.page.toString());
               if (widget.page.toString() == "seller") {
                 // Navigator.pop(context);
                 return;
@@ -97,7 +95,6 @@ class _MyDrawerState extends State<MyDrawer> {
             leading: const Icon(Icons.people),
             title: const Text('Community'),
             onTap: () {
-              print(widget.page.toString());
               Navigator.pop(context);
               if (widget.page.toString() == "community") {
                 //  Navigator.pop(context);
@@ -118,7 +115,6 @@ class _MyDrawerState extends State<MyDrawer> {
             leading: const Icon(Icons.verified_user),
             title: const Text('My Account'),
             onTap: () {
-              print(widget.page.toString());
               Navigator.pop(context);
               if (widget.page.toString() == "account") {
                 //  Navigator.pop(context);

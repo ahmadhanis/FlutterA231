@@ -39,7 +39,6 @@ class _EditBookPageState extends State<EditBookPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isbnCtrl.text = widget.book.bookIsbn.toString();
     titleCtrl.text = widget.book.bookTitle.toString();
@@ -164,44 +163,40 @@ class _EditBookPageState extends State<EditBookPage> {
                     children: [
                       Flexible(
                           flex: 3,
-                          child: Container(
-                            child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                validator: (val) =>
-                                    val!.isEmpty || (val.length < 3)
-                                        ? "Book price must contain value"
-                                        : null,
-                                onFieldSubmitted: (v) {},
-                                controller: priceCtrl,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    labelText: 'Book Price',
-                                    labelStyle: TextStyle(),
-                                    icon: Icon(Icons.money),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 2.0),
-                                    ))),
-                          )),
+                          child: TextFormField(
+                              textInputAction: TextInputAction.next,
+                              validator: (val) =>
+                                  val!.isEmpty || (val.length < 3)
+                                      ? "Book price must contain value"
+                                      : null,
+                              onFieldSubmitted: (v) {},
+                              controller: priceCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  labelText: 'Book Price',
+                                  labelStyle: TextStyle(),
+                                  icon: Icon(Icons.money),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.0),
+                                  )))),
                       Flexible(
                           flex: 3,
-                          child: Container(
-                            child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                validator: (val) =>
-                                    val!.isEmpty || !(int.parse(val) > 0)
-                                        ? "Product price must contain value"
-                                        : null,
-                                onFieldSubmitted: (v) {},
-                                controller: qtyCtrl,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    labelText: 'Quantity',
-                                    labelStyle: TextStyle(),
-                                    icon: Icon(Icons.add_box),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 2.0),
-                                    ))),
-                          )),
+                          child: TextFormField(
+                              textInputAction: TextInputAction.next,
+                              validator: (val) =>
+                                  val!.isEmpty || !(int.parse(val) > 0)
+                                      ? "Product price must contain value"
+                                      : null,
+                              onFieldSubmitted: (v) {},
+                              controller: qtyCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  labelText: 'Quantity',
+                                  labelStyle: TextStyle(),
+                                  icon: Icon(Icons.add_box),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.0),
+                                  )))),
                       Flexible(
                         flex: 3,
                         child: SingleChildScrollView(
@@ -232,7 +227,6 @@ class _EditBookPageState extends State<EditBookPage> {
                                       );
                                     }).toList(),
                                     onChanged: (String? newValue) {
-                                      print(newValue);
                                       dropdownvalue = newValue!;
 
                                       setState(() {});
@@ -314,7 +308,6 @@ class _EditBookPageState extends State<EditBookPage> {
       _image = File(pickedFile.path);
       cropImage();
     } else {
-      print('No image selected.');
     }
   }
 
@@ -331,7 +324,6 @@ class _EditBookPageState extends State<EditBookPage> {
 
       cropImage();
     } else {
-      print('No image selected.');
     }
   }
 
@@ -444,7 +436,6 @@ class _EditBookPageState extends State<EditBookPage> {
         }).then((response) {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data['status'] == "success") {
           Navigator.of(context).pop();
           Navigator.of(context).pop();

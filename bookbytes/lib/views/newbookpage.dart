@@ -148,44 +148,40 @@ class _NewBookPageState extends State<NewBookPage> {
                     children: [
                       Flexible(
                           flex: 3,
-                          child: Container(
-                            child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                validator: (val) =>
-                                    val!.isEmpty || (val.length < 3)
-                                        ? "Book price must contain value"
-                                        : null,
-                                onFieldSubmitted: (v) {},
-                                controller: priceCtrl,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    labelText: 'Book Price',
-                                    labelStyle: TextStyle(),
-                                    icon: Icon(Icons.money),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 2.0),
-                                    ))),
-                          )),
+                          child: TextFormField(
+                              textInputAction: TextInputAction.next,
+                              validator: (val) =>
+                                  val!.isEmpty || (val.length < 3)
+                                      ? "Book price must contain value"
+                                      : null,
+                              onFieldSubmitted: (v) {},
+                              controller: priceCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  labelText: 'Book Price',
+                                  labelStyle: TextStyle(),
+                                  icon: Icon(Icons.money),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.0),
+                                  )))),
                       Flexible(
                           flex: 3,
-                          child: Container(
-                            child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                validator: (val) =>
-                                    val!.isEmpty || !(int.parse(val) > 0)
-                                        ? "Product price must contain value"
-                                        : null,
-                                onFieldSubmitted: (v) {},
-                                controller: qtyCtrl,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    labelText: 'Quantity',
-                                    labelStyle: TextStyle(),
-                                    icon: Icon(Icons.add_box),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 2.0),
-                                    ))),
-                          )),
+                          child: TextFormField(
+                              textInputAction: TextInputAction.next,
+                              validator: (val) =>
+                                  val!.isEmpty || !(int.parse(val) > 0)
+                                      ? "Product price must contain value"
+                                      : null,
+                              onFieldSubmitted: (v) {},
+                              controller: qtyCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  labelText: 'Quantity',
+                                  labelStyle: TextStyle(),
+                                  icon: Icon(Icons.add_box),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.0),
+                                  )))),
                       Flexible(
                         flex: 3,
                         child: SingleChildScrollView(
@@ -216,7 +212,6 @@ class _NewBookPageState extends State<NewBookPage> {
                                       );
                                     }).toList(),
                                     onChanged: (String? newValue) {
-                                      print(newValue);
                                       dropdownvalue = newValue!;
 
                                       setState(() {});
@@ -298,7 +293,6 @@ class _NewBookPageState extends State<NewBookPage> {
       _image = File(pickedFile.path);
       cropImage();
     } else {
-      print('No image selected.');
     }
   }
 
@@ -315,7 +309,6 @@ class _NewBookPageState extends State<NewBookPage> {
 
       cropImage();
     } else {
-      print('No image selected.');
     }
   }
 
@@ -428,7 +421,6 @@ class _NewBookPageState extends State<NewBookPage> {
         }).then((response) {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data['status'] == "success") {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Insert Success"),

@@ -22,11 +22,7 @@ class _BookDetailsState extends State<BookDetails> {
   final f = DateFormat('dd-MM-yyyy hh:mm a');
   bool bookowner = false;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +70,13 @@ class _BookDetailsState extends State<BookDetails> {
                 ));
               }
             } else if (value == 2) {
-              print("Logout menu is selected.");
             }
           }),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Container(
+          SizedBox(
             height: screenHeight * 0.4,
             width: screenWidth,
             //  padding: const EdgeInsets.all(4.0),
@@ -230,7 +225,6 @@ class _BookDetailsState extends State<BookDetails> {
         }).then((response) {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data['status'] == "success") {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Delete Success"),

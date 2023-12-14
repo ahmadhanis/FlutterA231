@@ -132,8 +132,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _registerUserDialog() {
-    String _pass = _passEditingController.text;
-    String _pass2 = _pass2EditingController.text;
+    String pass = _passEditingController.text;
+    String pass2 = _pass2EditingController.text;
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -144,7 +144,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ));
       return;
     }
-    if (_pass != _pass2) {
+    if (pass != pass2) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Password do not match!!!"),
         backgroundColor: Colors.red,
@@ -243,20 +243,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _registerUser() {
-    String _name = _nameEditingController.text;
-    String _email = _emailditingController.text;
-    String _pass = _passEditingController.text;
+    String name = _nameEditingController.text;
+    String email = _emailditingController.text;
+    String pass = _passEditingController.text;
 
     http.post(
         Uri.parse("${MyServerConfig.server}/bookbytes/php/register_user.php"),
         body: {
-          "name": _name,
-          "email": _email,
-          "password": _pass
+          "name": name,
+          "email": email,
+          "password": pass
         }).then((response) {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data['status'] == "success") {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Registration Success"),

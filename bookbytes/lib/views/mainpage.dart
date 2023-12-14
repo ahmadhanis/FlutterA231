@@ -22,11 +22,17 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<Book> bookList = <Book>[];
   late double screenWidth, screenHeight;
+  int numofpage = 1;
+  int curpage = 1;
+  int numofresult = 0;
+
+  var color;
+  String title = "";
 
   @override
   void initState() {
     super.initState();
-    loadBooks("All");
+    loadBooks(title);
   }
 
   int axiscount = 2;
@@ -82,6 +88,10 @@ class _MainPageState extends State<MainPage> {
           ? const Center(child: Text("No Data"))
           : Column(
               children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Text("Page $curpage/$numofresult"),
+                ),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: axiscount,
@@ -97,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                                           user: widget.userdata,
                                           book: book,
                                         )));
-                            loadBooks("All");
+                            loadBooks(title);
                           },
                           child: Column(
                             children: [
@@ -136,7 +146,33 @@ class _MainPageState extends State<MainPage> {
                       );
                     }),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: screenHeight * 0.05,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: numofpage,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      //build the list for textbutton with scroll
+                      if ((curpage - 1) == index) {
+                        //set current page number active
+                        color = Colors.red;
+                      } else {
+                        color = Colors.black;
+                      }
+                      return TextButton(
+                          onPressed: () {
+                            curpage = index + 1;
+                            loadBooks(title);
+                          },
+                          child: Text(
+                            (index + 1).toString(),
+                            style: TextStyle(color: color, fontSize: 18),
+                          ));
+                    },
+                  ),
+                ),
               ],
             ),
       floatingActionButton: FloatingActionButton(
@@ -165,7 +201,7 @@ class _MainPageState extends State<MainPage> {
   String truncateString(String str) {
     if (str.length > 20) {
       str = str.substring(0, 20);
-      return str + "...";
+      return "$str...";
     } else {
       return str;
     }
@@ -175,10 +211,10 @@ class _MainPageState extends State<MainPage> {
     http
         .get(
       Uri.parse(
-          "${MyServerConfig.server}/bookbytes/php/load_books.php?title=$title"),
+          "${MyServerConfig.server}/bookbytes/php/load_books.php?title=$title&pageno=$curpage"),
     )
         .then((response) {
-      //log(response.body);
+      log(response.body);
       if (response.statusCode == 200) {
         log(response.body);
         var data = jsonDecode(response.body);
@@ -187,7 +223,8 @@ class _MainPageState extends State<MainPage> {
           data['data']['books'].forEach((v) {
             bookList.add(Book.fromJson(v));
           });
-          print("Data Reloaded!!!");
+          numofpage = int.parse(data['numofpage'].toString());
+          numofresult = int.parse(data['numberofresult'].toString());
         } else {
           //if no status failed
         }
@@ -198,6 +235,7 @@ class _MainPageState extends State<MainPage> {
 
   void showSearchDialog() {
     TextEditingController searchctlr = TextEditingController();
+    title = searchctlr.text;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -219,7 +257,7 @@ class _MainPageState extends State<MainPage> {
                     Navigator.of(context).pop();
                     loadBooks(searchctlr.text);
                   },
-                  child: Text("Search"),
+                  child: const Text("Search"),
                 )
               ],
             ));

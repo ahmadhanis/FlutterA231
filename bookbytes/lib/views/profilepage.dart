@@ -61,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Card(
                   child: Row(children: [
                 Container(
+                  // ignore: prefer_const_constructors
                   padding: EdgeInsets.all(8),
                   width: screenWidth * 0.4,
                   height: screenHeight * 0.4,

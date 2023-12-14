@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadpref();
   }
@@ -85,23 +84,21 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              child: Row(children: [
-                                Checkbox(
-                                  value: _isChecked,
-                                  onChanged: (bool? value) {
-                                    if (!_formKey.currentState!.validate()) {
-                                      return;
-                                    }
-                                    saveremovepref(value!);
-                                    setState(() {
-                                      _isChecked = value!;
-                                    });
-                                  },
-                                ),
-                                const Text("Remember Me"),
-                              ]),
-                            ),
+                            Row(children: [
+                              Checkbox(
+                                value: _isChecked,
+                                onChanged: (bool? value) {
+                                  if (!_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  saveremovepref(value!);
+                                  setState(() {
+                                    _isChecked = value;
+                                  });
+                                },
+                              ),
+                              const Text("Remember Me"),
+                            ]),
                             ElevatedButton(
                                 onPressed: () {
                                   _loginUser();
@@ -123,12 +120,12 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    String _email = _emailditingController.text;
-    String _pass = _passEditingController.text;
+    String email = _emailditingController.text;
+    String pass = _passEditingController.text;
 
     http.post(
         Uri.parse("${MyServerConfig.server}/bookbytes/php/login_user.php"),
-        body: {"email": _email, "password": _pass}).then((response) {
+        body: {"email": email, "password": pass}).then((response) {
       // print(response.statusCode);
       // print(response.body);
       if (response.statusCode == 200) {

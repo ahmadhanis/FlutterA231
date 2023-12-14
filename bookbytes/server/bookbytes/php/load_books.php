@@ -3,11 +3,25 @@
 include_once("dbconnect.php");
 $title = $_GET['title'];
 
-if ($title == "All"){
-    $sqlloadbooks = "SELECT * FROM `tbl_books`";
+//step 1
+$results_per_page = 10;
+//step 2
+if (isset($_GET['pageno'])){
+	$pageno = (int)$_GET['pageno'];
 }else{
-    $sqlloadbooks = "SELECT * FROM `tbl_books` WHERE `book_title` LIKE '%$title%'";
+	$pageno = 1;
 }
+//step 3
+$page_first_result = ($pageno - 1) * $results_per_page;
+
+//step 4
+$sqlloadbooks = "SELECT * FROM `tbl_books` WHERE `book_title` LIKE '%$title%'";
+$result = $conn->query($sqlloadbooks);
+$number_of_result = $result->num_rows;
+$number_of_page = ceil($number_of_result / $results_per_page);
+
+//step 5
+$sqlloadbooks = $sqlloadbooks . " LIMIT $page_first_result , $results_per_page";
 
 $result = $conn->query($sqlloadbooks);
 if ($result->num_rows > 0) {
@@ -27,7 +41,7 @@ if ($result->num_rows > 0) {
         $book['book_date'] = $row['book_date'];
         array_push( $booklist["books"],$book);
     }
-    $response = array('status' => 'success', 'data' => $booklist);
+    $response = array('status' => 'success', 'data' => $booklist, 'numofpage'=>$number_of_page,'numberofresult'=>$number_of_result);
     sendJsonResponse($response);
 }else{
 	$response = array('status' => 'failed', 'data' => null);

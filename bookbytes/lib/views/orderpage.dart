@@ -5,7 +5,7 @@ import 'dart:developer';
 
 import 'package:bookbytes/models/order.dart';
 import 'package:bookbytes/shared/mydrawer.dart';
-import 'package:bookbytes/views/orderdetails.dart';
+import 'package:bookbytes/views/orderdetailspage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/user.dart';
@@ -90,7 +90,8 @@ class _OrderPageState extends State<OrderPage> {
                               },
                               subtitle:
                                   Text("RM ${orderList[index].orderTotal}"),
-                              leading: Icon(Icons.sell),
+                                  
+                              leading: const Icon(Icons.sell),
                               trailing: Text(orderList[index]
                                   .orderStatus
                                   .toString()

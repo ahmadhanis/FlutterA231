@@ -208,10 +208,11 @@ class _MainPageState extends State<MainPage> {
   }
 
   void loadBooks(String title) {
+    String userid = widget.userdata.userid.toString(); 
     http
         .get(
       Uri.parse(
-          "${MyServerConfig.server}/bookbytes/php/load_books.php?title=$title&pageno=$curpage"),
+          "${MyServerConfig.server}/bookbytes/php/load_books.php?userid=$userid&title=$title&pageno=$curpage"),
     )
         .then((response) {
       log(response.body);

@@ -1,3 +1,4 @@
+import 'package:bookbytes_user/loginpage.dart';
 import 'package:bookbytes_user/registrationpage.dart';
 import 'package:flutter/material.dart';
 
@@ -43,10 +44,22 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(onPressed: () {
-               Navigator.push(context,
-              MaterialPageRoute(builder: (content) => const RegistrationPage()));
-            }, child: const Text("Registration"))
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (content) => const RegistrationPage()));
+                },
+                child: const Text("Registration")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (content) => const LoginPage()));
+                },
+                child: const Text("Login")),
           ],
         ),
       ),

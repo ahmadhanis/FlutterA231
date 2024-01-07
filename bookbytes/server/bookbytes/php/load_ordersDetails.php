@@ -3,7 +3,7 @@
 include_once("dbconnect.php");
 $orderid = $_GET['orderid'];
 
-$sqlloadorderdetails = "SELECT * FROM tbl_carts INNER JOIN tbl_books ON tbl_carts.book_id = tbl_books.book_id WHERE tbl_carts.order_id = '$orderid'";
+$sqlloadorderdetails = "SELECT * FROM tbl_carts INNER JOIN tbl_books ON tbl_carts.book_id = tbl_books.book_id WHERE tbl_carts.order_id = '$orderid' AND tbl_carts.cart_status ='Completed'";
 $result = $conn->query($sqlloadorderdetails);
 
 if ($result->num_rows > 0) {

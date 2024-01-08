@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:bookbytes_user/cartpage.dart';
-import 'package:bookbytes_user/user.dart';
+import 'package:bookbytes_user/view/cartpage.dart';
+import 'package:bookbytes_user/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'book.dart';
+import '../model/book.dart';
 import 'bookdetails.dart';
-import 'myserverconfig.dart';
+import '../shared/myserverconfig.dart';
 
 class BookListPage extends StatefulWidget {
   final User user;

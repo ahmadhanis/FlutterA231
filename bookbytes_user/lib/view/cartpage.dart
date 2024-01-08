@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:bookbytes_user/cart.dart';
-import 'package:bookbytes_user/user.dart';
+import 'package:bookbytes_user/model/cart.dart';
+import 'package:bookbytes_user/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'myserverconfig.dart';
+import '../shared/myserverconfig.dart';
 
 class CartPage extends StatefulWidget {
   final User user;

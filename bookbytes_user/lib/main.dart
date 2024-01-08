@@ -1,5 +1,5 @@
-import 'package:bookbytes_user/loginpage.dart';
-import 'package:bookbytes_user/registrationpage.dart';
+import 'package:bookbytes_user/view/loginpage.dart';
+import 'package:bookbytes_user/view/registrationpage.dart';
 import 'package:flutter/material.dart';
 
 void main() {

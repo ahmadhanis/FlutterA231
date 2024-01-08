@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:bookbytes_user/book.dart';
-import 'package:bookbytes_user/user.dart';
+import 'package:bookbytes_user/model/book.dart';
+import 'package:bookbytes_user/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
-import 'myserverconfig.dart';
+import '../shared/myserverconfig.dart';
 
 class BookDetails extends StatefulWidget {
   final User user;

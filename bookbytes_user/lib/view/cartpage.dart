@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../shared/myserverconfig.dart';
+import 'billscreen.dart';
 
 class CartPage extends StatefulWidget {
   final User user;
@@ -71,7 +72,16 @@ class _CartPageState extends State<CartPage> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: const Text("Pay Now"))
+                          onPressed: () async {
+
+                             await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (content) => BillScreen(
+                                        user: widget.user,
+                                        totalprice: total,
+                                      )));
+                          }, child: const Text("Pay Now"))
                     ],
                   ))
             ]),

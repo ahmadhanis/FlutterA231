@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
       // print(response.body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        print(data);
         if (data['status'] == "success") {
           User user = User.fromJson(data['data']);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

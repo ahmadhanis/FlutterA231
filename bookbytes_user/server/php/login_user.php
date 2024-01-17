@@ -20,6 +20,7 @@ if ($result->num_rows > 0) {
         $userlist['useremail'] = $row['user_email'];
         $userlist['username'] = $row['user_name'];
         $userlist['userpassword'] = $_POST['password'];
+        $userlist['userphone'] = $row['user_phone'];
         $userlist['userdatereg'] = $row['user_datereg'];
     }
     $response = array('status' => 'success', 'data' => $userlist);

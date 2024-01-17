@@ -73,15 +73,16 @@ class _CartPageState extends State<CartPage> {
                       ),
                       ElevatedButton(
                           onPressed: () async {
-
-                             await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (content) => BillScreen(
-                                        user: widget.user,
-                                        totalprice: total,
-                                      )));
-                          }, child: const Text("Pay Now"))
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) => BillScreen(
+                                          user: widget.user,
+                                          totalprice: total,
+                                        )));
+                            loadUserCart();
+                          },
+                          child: const Text("Pay Now"))
                     ],
                   ))
             ]),
@@ -104,7 +105,7 @@ class _CartPageState extends State<CartPage> {
           total = 0.0;
           data['data']['carts'].forEach((v) {
             cartList.add(Cart.fromJson(v));
-            
+
             total = total +
                 double.parse(v['book_price'] * int.parse(v['cart_qty']));
           });

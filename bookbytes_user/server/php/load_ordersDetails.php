@@ -3,7 +3,7 @@
 include_once("dbconnect.php");
 $orderid = $_GET['orderid'];
 
-$sqlloadorderdetails = "SELECT * FROM tbl_carts INNER JOIN tbl_books ON tbl_carts.book_id = tbl_books.book_id WHERE tbl_carts.order_id = '$orderid' AND tbl_carts.cart_status ='Completed'";
+$sqlloadorderdetails = "SELECT * FROM tbl_carts INNER JOIN tbl_books ON tbl_carts.book_id = tbl_books.book_id WHERE tbl_carts.order_id = '$orderid' AND tbl_carts.cart_status ='Paid'";
 $result = $conn->query($sqlloadorderdetails);
 
 if ($result->num_rows > 0) {
@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
     $response = array('status' => 'success', 'data' => $orderdetaillist);
     sendJsonResponse($response);
 }else{
-	$response = array('status' => 'failed', 'data' => null);
+	$response = array('status' => 'failed', 'data' => $sqlloadorderdetails);
 	sendJsonResponse($response);
 }
 

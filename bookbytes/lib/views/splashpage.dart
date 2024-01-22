@@ -80,6 +80,8 @@ class _SplashPageState extends State<SplashPage> {
                 useremail: "unregistered@email.com",
                 username: "Unregistered",
                 userdatereg: "",
+                userphone: "",
+                useraddress: "",
                 userpassword: "");
             Timer(
                 const Duration(seconds: 3),
@@ -98,6 +100,8 @@ class _SplashPageState extends State<SplashPage> {
           useremail: "unregistered@email.com",
           username: "Unregistered",
           userdatereg: "",
+          userphone: "",
+          useraddress: "",
           userpassword: "");
       Timer(
           const Duration(seconds: 3),

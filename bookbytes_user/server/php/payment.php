@@ -9,8 +9,8 @@ $amount = $_GET['amount'];
 //$sellerid = $_GET['sellerid'];
 
 
-$api_key = 'your-key';
-$collection_id = 'your CI';
+$api_key = 'yourkey';
+$collection_id = 'your billid';
 $host = 'https://www.billplz-sandbox.com/api/v3/bills';
 
 $data = array(

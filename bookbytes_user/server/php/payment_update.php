@@ -63,7 +63,7 @@ if ($signed === $data['x_signature']) {
                     $price = $cartarray['book_price'];
                     $qty = $cartarray['cart_qty'];
                     $total = $price * $qty;
-                   echo $sqlinsertorder = "INSERT INTO `tbl_orders`(`buyer_id`, `seller_id`, `order_total`, `order_status`) VALUES ('$userid','$seller','$total','$status')";
+                    $sqlinsertorder = "INSERT INTO `tbl_orders`(`buyer_id`, `seller_id`, `order_total`, `order_status`) VALUES ('$userid','$seller','$total','$status')";
                     $conn->query($sqlinsertorder);   
                 }else{
                     if ($i == 1 ){
@@ -72,9 +72,14 @@ if ($signed === $data['x_signature']) {
                     }else{
                         if ($seller == $row['seller_id']){
                             $total = $total+ $cartarray['cart_qty'] * $cartarray['book_price'];
+                            if ($i == $rows){
+                             $status = "New";
+                             $sqlinsertorder = "INSERT INTO `tbl_orders`(`buyer_id`, `seller_id`, `order_total`, `order_status`) VALUES ('$userid','$seller','$total','$status')";
+                             $conn->query($sqlinsertorder);   
+                            }
                         }else{
                              $status = "New";
-                            echo $sqlinsertorder = "INSERT INTO `tbl_orders`(`buyer_id`, `seller_id`, `order_total`, `order_status`) VALUES ('$userid','$seller','$total','$status')";
+                             $sqlinsertorder = "INSERT INTO `tbl_orders`(`buyer_id`, `seller_id`, `order_total`, `order_status`) VALUES ('$userid','$seller','$total','$status')";
                              $conn->query($sqlinsertorder);
                              $seller = $row['seller_id'];
                              $total = 0;
